@@ -113,6 +113,12 @@ display: flex;
     width: 500px;
     box-shadow: 8px 10px 10px rgba(108, 108, 108, 0.187);
 }
+.second-dropdown {
+    width: 350px;
+}
+.dropdown .list2 {
+    grid-template-columns: repeat(2, 1fr);
+}
 .dropdown-col-name {
     font-size: 17px;
     font-weight: bold;
