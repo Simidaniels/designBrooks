@@ -10,10 +10,10 @@ li {
     list-style: none;
 }
 .navbar-wrap {
-    background: #fdfdfd;
+    background: #fff;
     box-shadow: 10px 4px 16px rgba(145, 145, 145, 0.187);
     padding: 20px;
-    position: fixed;
+    /*position: fixed;*/
     width: 100%;
 }
 .logo img {
@@ -262,3 +262,131 @@ input[type=checkbox] {
         padding: 8px 10px;
     }
 }
+.intro-header {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    background: url(../img/brown-sofa.png) no-repeat center center fixed;
+    background-size: cover;
+}
+/*
+.bg-overlay {
+    background-color: rgb(0, 0, 0, 0);
+    background-color: rgba(32, 32, 32, 0.4);
+}
+*/
+.intro-message {
+    position: relative;
+    padding: 10% 0;
+    user-select: none;
+}
+/*Big header*/
+.intro-message h1 {
+    font-size: 3.5em;
+    font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #181818;
+}
+/*small header*/
+.intro-message h4 {
+    font-size: 20px;
+    font-weight: 300;
+    font-family: serif;
+    color: rgb(0, 0, 0);
+    padding: 14px 0;
+}
+.search {
+    background-color: #fff;
+    color: #383838;
+    padding: 12px;
+    width: 22em;
+    border: none;
+    box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.718);
+    outline: none;
+}
+.submit-btn {
+    /*position: absolute;*/
+    padding: 11px 11px;
+    background-color: #007562;
+    border: none;
+}
+.submit-btn .submit-btn-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fdfdfd;
+}
+.search::placeholder {
+    font-size: 12px;
+    font-style: italic;
+}
+.intro-social-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
+    gap: 14px;
+    user-select: none;
+}
+.intro-social-buttons .btn-title {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(56, 56, 56);
+}
+.btn {
+    color: #000;
+    border: 2px outset rgba(0, 0, 0, 0.9);
+    background: transparent;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    transition: 0.2s;
+    padding: 10px;
+    border-radius: 50px;
+}
+.btn:hover {
+    color: #fff;
+    border: 2px outset rgba(0, 0, 0, 0.9);
+    background: #007562;
+    transform: scale(1.2);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 20);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+/*
+@media(max-width:767px) {
+    .intro-header {
+        background: url(../img/gray-sofa.png) no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .intro-message {
+        padding-bottom: 15%;
+    }
+
+    .intro-message h1 {
+        font-size: 2.5em;
+    }
+
+    .intro-message h3 {
+        font-size: 16px;
+    }
+
+    .intro-social-buttons {
+        margin-top: 18px;
+        display: inline-block;
+    }
+
+    .intro-social-buttons li {
+        margin-bottom: 20px;
+    }
+
+    ul.intro-social-buttons li:last-child {
+        margin-bottom: 0;
+    }
+
+    .btn {
+        padding: 6px;
+    }
+
+}
+*/
