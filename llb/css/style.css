@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
+    user-select: none;
 }
 a {
     text-decoration: none;
@@ -18,7 +20,6 @@ li {
 }
 .logo img {
     width: 18vw;
-    user-select: none;
 }
 .navbar {
 display: flex;
@@ -65,7 +66,6 @@ display: flex;
     width: 100%;
     padding: 10px;
     text-align: center;
-    user-select: none;
     border: none;
     outline: none;
     border-radius: 30px;
@@ -148,11 +148,13 @@ input[type=checkbox] {
 .hamburger {
     display: none;
     font-size: 30px;
-    user-select: none;
     border: 1px solid rgb(100, 100, 100);
     border-radius: 6px;
     padding: 0 6px;
     color: rgb(46, 46, 46);
+}
+.contact-btn {
+    display: none;
 }
 @media (max-width: 620px) {
     .sub-icon {
@@ -178,11 +180,10 @@ input[type=checkbox] {
         cursor: pointer;
         display: inline-block;
         position: relative;
-        user-select: none;
         padding: 40px 20px;
     }
     .nav-links .menu-icon .nav-icon {
-        background: #048cfc;
+        background: #007562;
         display: block;
         height: 2px;
         position: relative;
@@ -191,7 +192,7 @@ input[type=checkbox] {
     }
     .nav-links .menu-icon .nav-icon:before,
     .nav-links .menu-icon .nav-icon:after {
-        background: #048cfc;
+        background: #007562;
         content: '';
         display: block;
         height: 100%;
@@ -261,6 +262,19 @@ input[type=checkbox] {
         display: inline-block;
         padding: 8px 10px;
     }
+    .contact-btn {
+        display: block;
+        text-align: center;
+    }
+    .btnn-text {
+        background-color: #007562;
+        padding: 12px 20px;
+        margin-top: 40px;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+    }
 }
 .intro-header {
     padding-top: 50px;
@@ -278,7 +292,6 @@ input[type=checkbox] {
 .intro-message {
     position: relative;
     padding: 10% 0;
-    user-select: none;
 }
 /*Big header*/
 .intro-message h1 {
@@ -325,7 +338,6 @@ input[type=checkbox] {
     justify-content: center;
     margin: 50px 0;
     gap: 14px;
-    user-select: none;
 }
 .intro-social-buttons .btn-title {
     font-size: 20px;
@@ -388,6 +400,89 @@ input[type=checkbox] {
        margin-bottom: 0;
     }
     .btn {
-       padding: 6px;
+        padding: 6px;
+        border-radius: 0;
     }
+}
+.content-section-a {
+    padding: 60px 0;
+    height: 800px;
+}
+.bg-overlay {
+    margin-top: -30px;
+    background: rgba(3, 3, 3, 0.322);
+    height: 740px;
+}
+.network-container {
+    text-align: center;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+.section-heading {
+    font-size: 3.2rem;
+    font-weight: 500;
+    margin: 0px 30%;
+    color: #fff;
+}
+.location-text {
+    padding: 15px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+}
+.btnn {
+    margin-top: 30px;
+}
+.default-btn {
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 8px 12px;
+}
+.default-btn:hover {
+    background-color: #fff;
+    color: rgb(60, 60, 60);
+}
+.network-text {
+    text-transform: capitalize;
+}
+@media(max-width:620px) {
+    .content-section-a {
+        height: 500px;
+    }
+    .bg-overlay {
+        height: 480px;
+    }
+    .section-heading {
+        font-size: 2rem;
+        margin: 0px 10%;
+    }
+    .location-text {
+        font-size: 14px;
+    }
+    .btnn {
+        margin-top: 25px;
+    }
+    .network-text {
+        font-size: 14px;
+    }
+}
+.section-a {
+    background: url(../img/office.png) no-repeat center center fixed;
+    background-size: cover;
+}
+.section-b {
+    background: url(../img/glass.png) no-repeat center center fixed;
+    background-size: cover;
+}
+.section-c {
+    background: url(../img/portable.png) no-repeat center center fixed;
+    background-size: cover;
+}
+.section-d {
+    background: url(../img/museum.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+.section-e {
+    background: url(../img/art.png) no-repeat center center fixed;
+    background-size: cover;
 }
