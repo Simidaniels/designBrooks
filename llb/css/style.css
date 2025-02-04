@@ -503,11 +503,18 @@ input[type=checkbox] {
     font-size: 14px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.col-lg-6 li:hover {
+/* .col-lg-6 li:hover {
     text-decoration: underline;
-}
+} */
 .col-lg-6 li a {
     color: #fff;
+}
+.col-lg-6 li a:hover {
+    /* background-color: #fff;
+    color: #001e00;
+    padding: 2px;
+    border-radius: 2px; */
+    text-decoration: underline;
 }
 .Footer-column-title {
     padding-bottom: 25px;
