@@ -73,6 +73,7 @@ textarea {
 
 .navbar {
     position: relative;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -739,8 +740,9 @@ body.menu-open {
         padding: 20px;
         border: 1px solid var(--line);
         border-radius: 24px;
-        background: rgba(255, 248, 240, 0.97);
+        background: #f8f2ea;
         box-shadow: var(--shadow);
+        z-index: 25;
         opacity: 0;
         pointer-events: none;
         transform: translateY(-10px);
