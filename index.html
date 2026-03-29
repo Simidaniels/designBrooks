@@ -4,271 +4,386 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="description" content="Design Brooks is an architecture and interior design studio creating refined residential, cultural, and workplace environments.">
+    <title>Design Brooks | Architecture & Interiors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./llb/css/style.css">
-    <title>Design Brooks</title>
-    <link rel="website icon" type="png" href=".//llb/img/wb-icn.png">
+    <link rel="icon" type="image/png" href="./llb/img/wb-icn.png">
 </head>
 <body>
+    <div class="site-shell">
+        <header class="hero" id="top">
+            <nav class="navbar">
+                <a href="#top" class="brand" aria-label="Design Brooks home">
+                    <img src="./llb/img/Logo.jpg" alt="Design Brooks logo">
+                    <span>Design Brooks</span>
+                </a>
 
-    <a name="navigation-bar"></a>
-    <nav class="navbar-wrap">
-        <nav class="navbar">
-            <div class="logo"> <img src="./llb/img/Logo.jpg"></div>
-            <div class="input-icons">
-                <i class="fa fa-search icon"></i>
-                <input class="input-field" type="text" placeholder="search designBrooks">
-            </div>
-            <ul class="nav-links">
-                <input class="menu-btn" type="checkbox" id="menu-btn"/>
-                <label class="menu-icon" for="menu-btn"><span class="nav-icon"></span></label>
-                <div class="menu">
-                    <li class="services">
-                        <a href="##" class="sub-head">Get Ideas
-                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0  0 24 24" stroke-linecap="round"
-                                stroke-linejoin="round" class="arrow-down" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </a>
-                        <ul class="dropdown">
-                            <div>
-                                <li class="dropdown-col-name"> Explore Photos</li>
-                            </div>
-                            <ul>
-                                <li><a href="#">Parlour</a></li>
-                                <li><a href="#">Dinning </a></li>
-                                <li><a href="#">Kitchen</a></li>
-                                <li><a href="#">Bathroom</a></li>
-                                <li><a href="#">Bedroom</a></li>
-                                <li><a href="#">BQ</a></li>
-                            </ul>
-                            <ul>
-                                <li><a href="#">Storage</a></li>
-                                <li><a href="#">Laundry</a></li>
-                                <li><a href="#">Garage</a></li>
-                                <li><a href="#">Porch</a></li>
-                                <li><a href="#">Garden</a></li>
-                                <li><a href="#">Flowers</a></li>
-                            </ul>
-                            <ul>
-                                <li><a href="#">Gym</a></li>
-                                <li><a href="#">Pool</a></li>
-                                <li><a href="#">Office</a></li>
-                            </ul>
-                        </ul>
-                    </li>
-                    <li class="services">
-                        <a href="##" class="sub-head">Find Professionals
-                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
-                                stroke-linejoin="round" class="arrow-down" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </a>
-                        <ul class="dropdown second-dropdown">
-                            <div>
-                                <li class="dropdown-col-name">Popular Professionals</li>
-                            </div>
-                            <ul class="list2">
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Planning </a></li>
-                                <li><a href="#">Construction</a></li>
-                                <li><a href="#">Renovation</a></li>
-                                <li><a href="#">Landscaping</a></li>
-                                <li><a href="#">Outdoor</a></li>
-                                <li><a href="#">System</a></li>
-                                <li><a href="#">Appliances</a></li>
-                                <li><a href="#">Fixtures</a></li>
-                                <li><a href="#">Finishes</a></li>
-                            </ul>
-                        </ul>
-                    </li>
-                    <li class="services">
-                        <a href="##" class="sub-head">Shop Products
-                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
-                                stroke-linejoin="round" class="arrow-down" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </a>
-                    </li>
+                <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
 
-                    <a href="##" class="contact-btn">
-                        <button class="btnn-text">Contact Us</button>
-                    </a>
-                    
-                    <a href="###" class="sub-icon"><i data-count="0" class="fa fa-shopping-cart badge"></i></a>
+                <div class="nav-links" id="site-menu">
+                    <a href="#studio">Studio</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#services">Services</a>
+                    <a href="#insights">Insights</a>
+                    <a href="#contact" class="nav-cta">Start a Project</a>
                 </div>
-            </ul>        
-        </nav>
-    </nav>
+            </nav>
 
-    <a name="header"></a>
-    <div class="intro-header">
-       <!--<div class="bg-overlay">-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="intro-message">
-                            <h1>The Best Place to Find Professionals</h1>
-                            <h4>Over 3,000 homeowners connect with the right pro every week for their remodeling projects. Ready to find yours?</h4>
-                            
-                            <div class="srch">
-                                <input type="search" name="" id="" placeholder="what service do you need?" class="search">
-                                   <button type="submit" class="submit-btn"><a href="#" class="submit-btn-text">Get Started</a></button>
-                            </div>
+            <div class="hero-grid">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow">Architecture, Interiors, Spatial Strategy</p>
+                    <h1>Designed with restraint. Built to feel exceptional.</h1>
+                    <p class="hero-text">
+                        Design Brooks is a multidisciplinary architecture and interiors studio delivering
+                        thoughtful residential, hospitality, workplace, and cultural environments with clarity,
+                        precision, and calm design leadership.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="button button-primary">Explore Projects</a>
+                        <a href="#contact" class="button button-secondary">Request a Consultation</a>
+                    </div>
+                    <dl class="hero-metrics">
+                        <div>
+                            <dt>12+</dt>
+                            <dd>Years of design practice</dd>
+                        </div>
+                        <div>
+                            <dt>48</dt>
+                            <dd>Completed private and commercial projects</dd>
+                        </div>
+                        <div>
+                            <dt>4</dt>
+                            <dd>Countries with built work and collaborations</dd>
+                        </div>
+                    </dl>
+                </div>
 
-                            <ul class="list-inline intro-social-buttons">
-                                <li>
-                                    <h5 class="btn-title">Hire a pro&colon;</h5>
-                                </li>
-                                <li>
-                                    <a href="##"
-                                        class="btn btn-default btn-lg "><span
-                                            class="network-name">Architects</span></a>
-                                </li>
-                                <li>
-                                    <a href="##"
-                                        class="btn btn-default btn-lg">
-                                            <span class="network-name">Contractors</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="##" 
-                                        class="btn btn-default btn-lg">
-                                            <span class="network-name">Interior Designers</span>
-                                </a>
-                                </li>
-                                <li>
-                                    <a href="##"
-                                        class="btn btn-default btn-lg">
-                                            <span class="network-name">See More</span>
-                                    </a>
-                                </li>
+                <div class="hero-media reveal">
+                    <div class="hero-card hero-card-main">
+                        <img src="./llb/img/house.jpg" alt="Design Brooks residential architecture project">
+                    </div>
+                    <div class="hero-card hero-card-accent">
+                        <img src="./llb/img/gray-sofa.png" alt="Design Brooks interior design detail">
+                    </div>
+                    <div class="hero-note">
+                        <span>Current focus</span>
+                        <strong>High-end residential, adaptive reuse, boutique hospitality, and branded spatial experiences.</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section intro-band reveal">
+                <p>
+                    We create architecture that is visually quiet, materially rich, and confidently resolved from concept to completion.
+                </p>
+            </section>
+
+            <section class="section value-strip">
+                <div class="value-card reveal">
+                    <p class="value-label">Disciplined Design</p>
+                    <p>Clear concepts, elegant proportions, and highly resolved detailing.</p>
+                </div>
+                <div class="value-card reveal">
+                    <p class="value-label">Professional Delivery</p>
+                    <p>Structured process, consultant coordination, and dependable communication.</p>
+                </div>
+                <div class="value-card reveal">
+                    <p class="value-label">Client-Centered</p>
+                    <p>Design decisions shaped around lifestyle, operations, and long-term value.</p>
+                </div>
+            </section>
+
+            <section class="section studio-section" id="studio">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">The Studio</p>
+                    <h2>Professional design rooted in precision, atmosphere, and real-world function.</h2>
+                </div>
+                <div class="studio-layout">
+                    <article class="studio-text reveal">
+                        <p>
+                            Every project begins with a careful reading of context: the site, the brief, the budget,
+                            and the emotional tone the space should carry. We shape each response through a disciplined
+                            design process that keeps creativity purposeful and buildable.
+                        </p>
+                        <p>
+                            Our work is defined by clean geometry, layered material palettes, natural light, and a strong
+                            sense of spatial calm. The outcome is architecture that feels contemporary, durable, and deeply considered.
+                        </p>
+                    </article>
+                    <div class="studio-image reveal">
+                        <img src="./llb/img/office.png" alt="Design Brooks studio project">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section expertise-section">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Capabilities</p>
+                    <h2>Design expertise tailored to clients who want refinement and certainty.</h2>
+                </div>
+                <div class="expertise-grid">
+                    <article class="expertise-card reveal">
+                        <h3>Private Residences</h3>
+                        <p>New homes, villa upgrades, apartment transformations, and signature interiors.</p>
+                    </article>
+                    <article class="expertise-card reveal">
+                        <h3>Commercial Spaces</h3>
+                        <p>Studios, offices, retail destinations, and hospitality environments that elevate brand experience.</p>
+                    </article>
+                    <article class="expertise-card reveal">
+                        <h3>Cultural Projects</h3>
+                        <p>Galleries, learning spaces, and adaptive reuse work shaped around movement and public engagement.</p>
+                    </article>
+                    <article class="expertise-card reveal">
+                        <h3>Refurbishment</h3>
+                        <p>Strategic redesign of existing properties with improved flow, finishes, performance, and identity.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section projects-section" id="projects">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Selected Projects</p>
+                    <h2>Distinct work across residential, workplace, and cultural environments.</h2>
+                </div>
+
+                <div class="projects-grid">
+                    <article class="project-card project-card-large reveal">
+                        <img src="./llb/img/glass.png" alt="Glass-fronted innovation center">
+                        <div class="project-card-content">
+                            <p class="project-meta">Workplace / New York</p>
+                            <h3>Hudson Innovation Hub</h3>
+                            <p>A contemporary workplace designed for flexibility, daylight performance, and collaborative use.</p>
+                            <ul class="project-tags">
+                                <li>Interior Architecture</li>
+                                <li>Workplace Strategy</li>
+                                <li>Detailed Design</li>
                             </ul>
                         </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <img src="./llb/img/portable.png" alt="Coastal residence">
+                        <div class="project-card-content">
+                            <p class="project-meta">Residential / Sydney</p>
+                            <h3>Coastal House Retreat</h3>
+                            <p>A private home with quiet material transitions, framed views, and generous indoor-outdoor living.</p>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <img src="./llb/img/museum.jpg" alt="Museum architecture">
+                        <div class="project-card-content">
+                            <p class="project-meta">Cultural / Berlin</p>
+                            <h3>Children's Museum Renewal</h3>
+                            <p>An adaptive reuse concept that opens circulation, improves wayfinding, and encourages discovery.</p>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <img src="./llb/img/art.png" alt="Art gallery interior">
+                        <div class="project-card-content">
+                            <p class="project-meta">Gallery / Ottawa</p>
+                            <h3>North Gallery Rooms</h3>
+                            <p>A restrained exhibition environment where architecture supports art, rhythm, and visitor flow.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section stats-section">
+                <div class="stats-panel reveal">
+                    <div>
+                        <p class="eyebrow">Why Clients Return</p>
+                        <h2>Measured thinking, clear communication, and design that stays strong after handover.</h2>
+                    </div>
+                    <div class="stats-grid">
+                        <article>
+                            <strong>92%</strong>
+                            <span>of clients come through referrals and repeat collaborations</span>
+                        </article>
+                        <article>
+                            <strong>18</strong>
+                            <span>active consultants, builders, and specialist partners in our network</span>
+                        </article>
+                        <article>
+                            <strong>1:1</strong>
+                            <span>direct studio involvement from concept development through delivery support</span>
+                        </article>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <a name="about-sections"></a>
-    <div class="content-section-a section-a">
-        <div class="bg-overlay">
-            <div class="network-container">
-                <h1 class="section-heading">Design Brooks Expands To New York City</h1>
-                <p class="location-text">USA, New York City.</p>
-                <div class="btnn">
-                    <a href="##" class="default-btn">
-                        <span class="network-text">learn more</span>
-                    </a>
+            <section class="section services-section" id="services">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Services</p>
+                    <h2>End-to-end support for serious, design-led projects.</h2>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="content-section-a section-b">
-        <div class="bg-overlay">
-            <div class="network-container">
-                <h1 class="section-heading">Design Brooks Innovation Center at Nike World Headquarters</h1>
-                <p class="location-text">Beaverton, Oregon.</p>
-                <div class="btnn">
-                    <a href="##" class="default-btn">
-                        <span class="network-text">learn more</span>
-                    </a>
+                <div class="services-grid">
+                    <article class="service-card reveal">
+                        <h3>Architectural Design</h3>
+                        <p>Concept design, spatial planning, facade development, and detailed design packages for new builds and major renovations.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <h3>Interior Architecture</h3>
+                        <p>Interior layouts, finish palettes, lighting direction, custom joinery design, and atmosphere-led material selection.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <h3>Design Advisory</h3>
+                        <p>Feasibility studies, site reviews, project visioning, and strategic input for property owners and developers.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <h3>Project Coordination</h3>
+                        <p>Documentation support and collaboration with consultants, contractors, and fabricators through project delivery.</p>
+                    </article>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <div class="content-section-a section-c">
-        <div class="bg-overlay">
-            <div class="network-container">
-                <h1 class="section-heading">Design Brooks Beach House</h1>
-                <p class="location-text">Sydney, Australia.</p>
-                <div class="btnn">
-                    <a href="##" class="default-btn">
-                        <span class="network-text">learn more</span>
-                    </a>
+            <section class="section process-section" id="process">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Process</p>
+                    <h2>A structured approach that keeps creative work disciplined and buildable.</h2>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="content-section-a section-d">
-        <div class="bg-overlay">
-            <div class="network-container">
-                <h1 class="section-heading">BERKELEY - The Children's World of Jewish Museum</h1>
-                <p class="location-text">Berlin, Germany.</p>
-                <div class="btnn">
-                    <a href="##" class="default-btn">
-                        <span class="network-text">learn more</span>
-                    </a>
+                <div class="process-list">
+                    <article class="process-item reveal">
+                        <span>01</span>
+                        <div>
+                            <h3>Brief & Discovery</h3>
+                            <p>We define goals, spatial needs, budget parameters, timelines, and the intended emotional quality of the space.</p>
+                        </div>
+                    </article>
+                    <article class="process-item reveal">
+                        <span>02</span>
+                        <div>
+                            <h3>Concept Development</h3>
+                            <p>Early studies translate the brief into a coherent design direction, planning logic, and material narrative.</p>
+                        </div>
+                    </article>
+                    <article class="process-item reveal">
+                        <span>03</span>
+                        <div>
+                            <h3>Detail & Coordination</h3>
+                            <p>We refine drawings, specifications, and technical decisions so the design can move into execution with confidence.</p>
+                        </div>
+                    </article>
+                    <article class="process-item reveal">
+                        <span>04</span>
+                        <div>
+                            <h3>Delivery Support</h3>
+                            <p>Throughout procurement and construction, we help protect design intent and maintain quality outcomes.</p>
+                        </div>
+                    </article>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <div class="content-section-a section-e">
-        <div class="bg-overlay">
-            <div class="network-container">
-                <h1 class="section-heading">Design Brooks Art Gallery</h1>
-                <p class="location-text">Ottawa, Canada.</p>
-                <div class="btnn">
-                    <a href="##" class="default-btn">
-                        <span class="network-text">learn more</span>
-                    </a>
+            <section class="section testimonials-section" id="insights">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Client Perspective</p>
+                    <h2>Trusted for thoughtful design and calm project leadership.</h2>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="testimonial-grid">
+                    <article class="testimonial-card reveal">
+                        <p class="quote">"Design Brooks brought order, elegance, and confidence to a complex renovation. The final result feels effortless."</p>
+                        <p class="author">Private Client / Ikoyi Residence</p>
+                    </article>
+                    <article class="testimonial-card reveal">
+                        <p class="quote">"Their team communicated clearly, resolved issues early, and gave our brand a space that genuinely elevates the customer experience."</p>
+                        <p class="author">Founder / Hospitality Concept</p>
+                    </article>
+                    <article class="testimonial-card reveal">
+                        <p class="quote">"The design language was refined from the start, but what stood out most was the professionalism of the delivery process."</p>
+                        <p class="author">Project Partner / Cultural Retrofit</p>
+                    </article>
+                </div>
+            </section>
 
-    <a name="contact"></a>
-    <div class="banner">
-        <div class="bg-overlay4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="footer-logo"> <img src="./llb/img/Logo.jpg"></div>
-                        <ul class="list-unstyled">
-                            <div>
-                                <h2 class="Footer-column-title text-bold">Business Services</h2>
-                            </div>
-                            <li><a href="##">For Professionals</a></li>
-                            <li><a href="##">Remodeling Software</a></li>
-                            <li><a href="##">Floor Planner</a></li>
-                            <li><a href="##">Contractor Leads</a></li>
-                            <li><a href="##">Trade Program</a></li>
-                        </ul>
-                        <ul class="list-inline connect-social-buttons">
-                            <div>
-                                <h2 class="Footer-column-title text-bold">Connect With Us</h2>
-                            </div>
-                            <li>
-                                <a href="##designBrooks" target="_blank"
-                                    class="btn-g"><i class="fa fa-facebook fa-fw"></i> <span
-                                        class="social-btn">Facebook</span></a>
-                            </li>
-                            <li>
-                                <a href="##designBrooks" target="_blank"
-                                    class="btn-g"><i class="fa fa-twitter fa-fw"></i> <span
-                                        class="social-btn">Twitter</span></a>
-                            </li>
-                            <li>
-                                <a href="h##designBrooks" target="_blank"
-                                    class="btn-g"><i class="fa fa-instagram fa-fw"></i> <span
-                                        class="social-btn">Instagram</span></a>
-                            </li>
-                            <li>
-                                <a href="##designBrooks" target="_blank" class="btn-g"><i
-                                        class="fa fa-youtube fa-fw"></i> <span class="social-btn">YouTube</span></a>
-                            </li>
-                        </ul>
+            <section class="section faq-section">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">FAQ</p>
+                    <h2>Helpful details before we begin.</h2>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item reveal">
+                        <summary>What kind of projects do you take on?</summary>
+                        <p>We work on residential, hospitality, workplace, and selected cultural projects, including new builds, interior architecture, and high-value refurbishments.</p>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>Can you work with existing buildings?</summary>
+                        <p>Yes. Refurbishment and adaptive reuse are a core part of our work, especially where layout, identity, and finish quality need a strong redesign strategy.</p>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>Do you collaborate with contractors and consultants?</summary>
+                        <p>Yes. We regularly coordinate with structural, MEP, lighting, landscape, and construction teams to keep design and delivery aligned.</p>
+                    </details>
+                </div>
+            </section>
+
+            <section class="section contact-section" id="contact">
+                <div class="contact-panel reveal">
+                    <div class="contact-copy">
+                        <p class="eyebrow">Contact</p>
+                        <h2>Planning a new project or a professional refurbishment?</h2>
+                        <p>
+                            Tell us about your location, project type, timeline, and level of support required.
+                            We work with private clients, brands, and institutions looking for thoughtful design leadership.
+                        </p>
+                        <div class="contact-direct">
+                            <a href="mailto:hello@designbrooks.com">hello@designbrooks.com</a>
+                            <a href="tel:+2340000000000">+234 (0) 000 000 0000</a>
+                            <p>Lagos / New York / Remote Collaborations</p>
+                        </div>
                     </div>
-                    <hr class="footer-divider">
-                    <p class="copyright text-muted small">Copyright&copy; DesignBrooks Studio® 2023. All Rights Reserved</p>
+                    <form class="contact-form">
+                        <label>
+                            Full Name
+                            <input type="text" name="name" placeholder="Your name">
+                        </label>
+                        <label>
+                            Email Address
+                            <input type="email" name="email" placeholder="you@example.com">
+                        </label>
+                        <label>
+                            Project Type
+                            <select name="project-type">
+                                <option>Residential</option>
+                                <option>Commercial</option>
+                                <option>Hospitality</option>
+                                <option>Refurbishment</option>
+                            </select>
+                        </label>
+                        <label>
+                            Project Brief
+                            <textarea name="brief" rows="5" placeholder="Tell us about the site, timeline, and scope."></textarea>
+                        </label>
+                        <button class="button button-primary" type="submit">Send Enquiry</button>
+                    </form>
                 </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div>
+                <p class="footer-title">Design Brooks</p>
+                <p>Architecture and interiors for residential, workplace, hospitality, and cultural spaces.</p>
             </div>
-        </div>
+            <div class="footer-links">
+                <a href="#studio">Studio</a>
+                <a href="#projects">Projects</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p class="footer-note">Crafted for clients who value clarity, detail, and enduring design quality.</p>
+        </footer>
     </div>
 
     <script src="./llb/script/main.js"></script>
