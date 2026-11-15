@@ -3,6 +3,7 @@ import { authorizedDocument, resolveClientToken } from "@/lib/server/client-link
 import { getObject } from "@/lib/server/storage";
 import { logActivity } from "@/lib/server/activity";
 import { contentTypeFor, safeFileName } from "@/lib/server/mime";
+import { sniff } from "@/lib/server/file-sniff";
 import { prisma } from "@/lib/server/db";
 
 export const runtime = "nodejs";
@@ -38,6 +39,11 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     return NextResponse.json({ error: "Preview unavailable." }, { status: 404 });
   }
 
+  // Serve by actual bytes when recognizable, not just by key extension —
+  // covers legacy previews stored with a mismatched extension.
+  const sniffed = sniff(data);
+  const servedExt = sniffed.ok ? sniffed.kind : ext;
+
   await logActivity({
     actorType: "CLIENT",
     action: "Document previewed",
@@ -54,7 +60,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   return new NextResponse(new Uint8Array(data), {
     status: 200,
     headers: {
-      "Content-Type": contentTypeFor(ext),
+      "Content-Type": contentTypeFor(servedExt),
       "Content-Length": String(data.length),
       "Content-Disposition": `inline; filename="${fileName}"`,
       "X-Content-Type-Options": "nosniff",

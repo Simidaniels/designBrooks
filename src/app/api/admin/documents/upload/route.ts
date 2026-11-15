@@ -82,12 +82,12 @@ export async function POST(request: NextRequest) {
   if (isRestricted) {
     if (previewable) {
       try {
-        const previewBuffer =
+        const preview =
           sniffed.kind === "pdf"
             ? await watermarkPdf(buffer, project.client.fullName, project.reference ?? "DB")
             : await watermarkImage(buffer, project.client.fullName, project.reference ?? "DB");
-        previewKey = newStorageKey(projectId, ext);
-        await putObject(previewKey, previewBuffer);
+        previewKey = newStorageKey(projectId, preview.ext);
+        await putObject(previewKey, preview.buffer);
       } catch (err) {
         console.error("[upload] watermark failed:", err);
         status = "FAILED";

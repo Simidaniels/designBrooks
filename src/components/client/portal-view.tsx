@@ -43,6 +43,7 @@ export function PortalView({
   const [category, setCategory] = React.useState<"all" | DocumentCategory>("all");
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [imgZoom, setImgZoom] = React.useState(1);
+  const [imgError, setImgError] = React.useState(false);
 
   const filtered = category === "all" ? documents : documents.filter((d) => d.category === category);
   const selected = documents.find((d) => d.id === selectedId) ?? filtered[0] ?? documents[0];
@@ -52,6 +53,7 @@ export function PortalView({
   }, [documents, filtered, selectedId]);
 
   React.useEffect(() => setImgZoom(1), [selectedId]);
+  React.useEffect(() => setImgError(false), [selectedId]);
 
   const categoryCounts = documents.reduce<Record<string, number>>((acc, d) => {
     acc[d.category] = (acc[d.category] ?? 0) + 1;
@@ -190,7 +192,7 @@ export function PortalView({
                 <div className="h-[480px] sm:h-[560px]">
                   {isPdf && fileUrl ? (
                     <PdfViewer url={fileUrl} fileName={selected.fileName} />
-                  ) : isImage && fileUrl ? (
+                  ) : isImage && fileUrl && !imgError ? (
                     <div className="flex h-full flex-col">
                       <div className="flex items-center gap-1 border-b border-white/10 bg-ink-900 px-3 py-2.5">
                         <button onClick={() => setImgZoom((z) => Math.max(0.4, +(z - 0.25).toFixed(2)))} aria-label="Zoom out" className="rounded-lg p-2 text-ivory-100/70 transition hover:bg-white/10 hover:text-ivory-50">
@@ -209,6 +211,7 @@ export function PortalView({
                         <img
                           src={fileUrl}
                           alt={selected.name}
+                          onError={() => setImgError(true)}
                           style={{ transform: `scale(${imgZoom})` }}
                           className="max-h-full max-w-full origin-center rounded-md object-contain transition-transform duration-150"
                         />
