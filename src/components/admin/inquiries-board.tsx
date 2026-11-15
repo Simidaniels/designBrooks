@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -13,6 +14,9 @@ import {
   ChevronDown,
   FileText,
   X,
+  CheckCircle2,
+  AlertCircle,
+  UserRound,
 } from "lucide-react";
 import { Input } from "@/components/ui/field";
 import { EmptyState } from "@/components/admin/page-header";
@@ -29,6 +33,13 @@ export function InquiriesBoard({ inquiries }: { inquiries: Inquiry[] }) {
   const [filter, setFilter] = React.useState<"all" | InquiryStatus>("all");
   const [openId, setOpenId] = React.useState<string | null>(null);
   const [busyId, setBusyId] = React.useState<string | null>(null);
+  const [notice, setNotice] = React.useState<{ type: "ok" | "error"; text: string; clientId?: string } | null>(null);
+
+  React.useEffect(() => {
+    if (!notice) return;
+    const timer = window.setTimeout(() => setNotice(null), 10000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
 
   const counts = React.useMemo(
     () =>
@@ -62,8 +73,20 @@ export function InquiriesBoard({ inquiries }: { inquiries: Inquiry[] }) {
 
   const advance = async (id: string, status: InquiryStatus) => {
     setBusyId(id);
-    await setInquiryStatusAction(id, status);
+    setNotice(null);
+    const result = await setInquiryStatusAction(id, status);
     setBusyId(null);
+    if (result && !result.ok) {
+      setNotice({ type: "error", text: result.error ?? "The status could not be updated. Nothing was changed." });
+      return;
+    }
+    if (result && "message" in result && result.message) {
+      setNotice({
+        type: "ok",
+        text: result.message,
+        clientId: "clientId" in result && typeof result.clientId === "string" ? result.clientId : undefined,
+      });
+    }
     router.refresh();
   };
 
@@ -118,6 +141,39 @@ export function InquiriesBoard({ inquiries }: { inquiries: Inquiry[] }) {
           ))}
         </div>
       </div>
+
+      {/* ————— Conversion / error notice ————— */}
+      {notice && (
+        <div
+          role="status"
+          className={cn(
+            "mb-3 flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-3 text-[0.82rem] font-semibold shadow-soft",
+            notice.type === "ok" ? "border-success/40 bg-success-soft text-success" : "border-danger/40 bg-danger-soft text-danger"
+          )}
+        >
+          {notice.type === "ok" ? (
+            <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden="true" />
+          ) : (
+            <AlertCircle className="h-5 w-5 shrink-0" aria-hidden="true" />
+          )}
+          <span className="min-w-0 flex-1">{notice.text}</span>
+          {notice.clientId && (
+            <Link
+              href={`/admin/clients/${notice.clientId}`}
+              className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-success/40 bg-white/70 px-3 text-[0.74rem] font-bold text-success transition hover:bg-white"
+            >
+              <UserRound className="h-4 w-4" aria-hidden="true" /> View client
+            </Link>
+          )}
+          <button
+            onClick={() => setNotice(null)}
+            aria-label="Dismiss"
+            className="shrink-0 rounded-md p-1 opacity-70 transition hover:opacity-100"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+      )}
 
       {/* ————— Summary line ————— */}
       <p className="mb-2 flex flex-wrap items-center gap-x-3 text-[0.72rem] text-faint">
@@ -200,6 +256,14 @@ export function InquiriesBoard({ inquiries }: { inquiries: Inquiry[] }) {
                               <span>Received <strong className="text-ink">{formatDateTime(inquiry.createdAt)}</strong></span>
                               <span>Service <strong className="text-ink">{inquiry.service}</strong></span>
                               {inquiry.location && <span>Location <strong className="text-ink">{inquiry.location}</strong></span>}
+                              {inquiry.clientId && (
+                                <Link
+                                  href={`/admin/clients/${inquiry.clientId}`}
+                                  className="inline-flex items-center gap-1 font-semibold text-accent-dark underline underline-offset-2 transition hover:text-accent"
+                                >
+                                  <UserRound className="h-3.5 w-3.5" aria-hidden="true" /> View linked client
+                                </Link>
+                              )}
                             </p>
                           </div>
 

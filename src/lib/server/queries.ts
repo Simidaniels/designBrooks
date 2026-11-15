@@ -159,7 +159,7 @@ export function mapActivity(a: ActivityRow): ActivityEvent {
 
 type InquiryRowFull = {
   id: string; name: string; email: string; service: string; location: string | null;
-  description: string | null; status: string; isRead: boolean; createdAt: Date;
+  description: string | null; status: string; isRead: boolean; createdAt: Date; clientId: string | null;
 };
 export function mapInquiry(i: InquiryRowFull): Inquiry {
   return {
@@ -172,6 +172,7 @@ export function mapInquiry(i: InquiryRowFull): Inquiry {
     createdAt: i.createdAt.toISOString(),
     status: mapInquiryStatus(i.status),
     isRead: i.isRead,
+    clientId: i.clientId,
   };
 }
 

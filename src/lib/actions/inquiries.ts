@@ -6,6 +6,7 @@ import { prisma } from "@/lib/server/db";
 import { requireAdminOrThrow } from "@/lib/server/auth";
 import { inquirySchema } from "@/lib/validation";
 import { unmapInquiryStatus } from "@/lib/server/queries";
+import { convertInquiryToClient } from "@/lib/server/inquiry-conversion";
 import type { InquiryStatus } from "@/lib/types";
 
 const inquiryAttempts = new Map<string, { count: number; resetAt: number }>();
@@ -70,10 +71,22 @@ export async function markInquiryReadAction(id: string) {
   return { ok: true as const };
 }
 
-/** Admin — advance an inquiry through its lifecycle (also marks it read). */
+/** Admin — advance an inquiry through its lifecycle (also marks it read).
+    Converting automatically creates (or links) the corresponding client —
+    atomically, idempotently — see lib/server/inquiry-conversion. */
 export async function setInquiryStatusAction(id: string, status: InquiryStatus) {
   let admin;
   try { admin = await requireAdminOrThrow(); } catch { return { ok: false as const, error: "Not authenticated." }; }
+
+  if (status === "converted") {
+    const result = await convertInquiryToClient(id, admin.id);
+    if (result.ok) {
+      revalidatePath("/admin/inquiries");
+      revalidatePath("/admin/dashboard");
+      revalidatePath("/admin/clients");
+    }
+    return result;
+  }
 
   const inquiry = await prisma.inquiry.findUnique({ where: { id } });
   if (!inquiry) return { ok: false as const, error: "Inquiry not found." };
@@ -81,5 +94,5 @@ export async function setInquiryStatusAction(id: string, status: InquiryStatus) 
   await prisma.inquiry.update({ where: { id }, data: { status: unmapInquiryStatus(status) as never, isRead: true } });
   revalidatePath("/admin/inquiries");
   revalidatePath("/admin/dashboard");
-  return { ok: true as const };
+  return { ok: true as const, outcome: "updated" as const };
 }

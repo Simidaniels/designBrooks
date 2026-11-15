@@ -98,6 +98,7 @@ export type Inquiry = {
   createdAt: string;
   status: InquiryStatus;
   isRead: boolean;
+  clientId?: string | null;
 };
 
 export type PortfolioProject = {

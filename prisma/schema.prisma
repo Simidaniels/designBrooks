@@ -103,6 +103,7 @@ model Client {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   projects      Project[]
+  inquiries     Inquiry[]
 
   @@index([email])
   @@index([archivedAt])
@@ -181,11 +182,14 @@ model Inquiry {
   description String?
   status      InquiryStatus @default(NEW)
   isRead      Boolean       @default(false)
+  clientId    String? // set when the inquiry is converted to (or linked with) a client
+  client      Client?       @relation(fields: [clientId], references: [id], onDelete: SetNull)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
   @@index([status, createdAt])
   @@index([isRead, status])
+  @@index([clientId])
 }
 
 model ActivityLog {
