@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme {
+  /* ————— Design Brooks brand tokens ————— */
+  --color-ivory: #f3ede4;
+  --color-ivory-50: #faf7f1;
+  --color-ivory-100: #f7f2eb;
+  --color-ivory-200: #f1eadf;
+  --color-ivory-300: #e7ded0;
+  --color-surface: #fdfbf8;
+  --color-surface-soft: rgba(255, 250, 244, 0.74);
+
+  --color-ink: #1f1b17;
+  --color-ink-800: #2a2620;
+  --color-ink-900: #17140f;
+
+  --color-muted: #655c52;
+  --color-faint: #8d8377;
+
+  --color-accent: #866446;
+  --color-accent-dark: #64472f;
+  --color-accent-light: #a8845f;
+  --color-sand: #d8c9b6;
+
+  --color-line: rgba(31, 27, 23, 0.12);
+  --color-line-strong: rgba(31, 27, 23, 0.22);
+
+  --color-success: #3d6b4f;
+  --color-success-soft: #e8efe9;
+  --color-warning: #8a6a1d;
+  --color-warning-soft: #f4ecd8;
+  --color-danger: #9d3b2e;
+  --color-danger-soft: #f5e6e2;
+  --color-gold: #b08d4f;
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 0.75rem;
+  --radius-md: 1.1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+
+  --shadow-soft: 0 14px 34px rgba(38, 26, 15, 0.08);
+  --shadow-card: 0 28px 70px rgba(38, 26, 15, 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(134, 100, 70, 0.14), transparent 30%),
+    linear-gradient(180deg, #f7f2eb 0%, #f1eadf 100%);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(134, 100, 70, 0.28);
+}
+
+/* Reveal-on-scroll helper (paired with <Reveal/>) */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* Focus visibility for accessibility */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Thin elegant scrollbars inside panels */
+.thin-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(31,27,23,0.18); border-radius: 999px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* Diagonal watermark pattern for restricted previews */
+.watermark-layer {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0px,
+    transparent 110px,
+    rgba(31, 27, 23, 0.055) 110px,
+    rgba(31, 27, 23, 0.055) 111px
+  );
+}
+
+/* Admin table base */
+.data-table th {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 800;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-line-strong);
+  background: var(--color-ivory-100);
+}
+.data-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: middle;
+  font-size: 0.875rem;
+}
+.data-table tbody tr {
+  transition: background 0.15s ease;
+}
+.data-table tbody tr:hover {
+  background: rgba(134, 100, 70, 0.06);
+}
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
