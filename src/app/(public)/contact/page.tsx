@@ -5,7 +5,7 @@ import { InquiryForm } from "@/components/public/inquiry-form";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Speak with the Design Brooks studio — Lagos, New York, and remote collaborations worldwide.",
+  description: "Speak with the Design Brooks studio — Lagos, Nigeria, and remote and onsite collaborations worldwide.",
 };
 
 export default function ContactPage() {
@@ -22,10 +22,10 @@ export default function ContactPage() {
         <div className="h-fit rounded-[1.5rem] border border-line bg-ink p-8 text-ivory-100">
           <p className="text-[0.66rem] font-extrabold uppercase tracking-[0.22em] text-gold">Studio</p>
           <ul className="mt-5 grid gap-5 text-[0.95rem]">
-            <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><span>Lagos · New York<br /><span className="text-ivory-100/60">Remote collaborations worldwide</span></span></li>
-            <li className="flex items-center gap-3"><Mail className="h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><a href="mailto:hello@designbrooks.com" className="transition hover:text-ivory-50">hello@designbrooks.com</a></li>
-            <li className="flex items-center gap-3"><Phone className="h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><a href="tel:+2340000000000" className="transition hover:text-ivory-50">+234 (0) 000 000 0000</a></li>
-            <li className="flex items-start gap-3"><Clock className="mt-0.5 h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><span>Mon–Fri, 09:00–18:00 WAT / ET<br /><span className="text-ivory-100/60">Site visits by appointment</span></span></li>
+            <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><span>Lagos, Nigeria<br /><span className="text-ivory-100/60">Remote and Onsite Collaborations</span></span></li>
+            <li className="flex items-center gap-3"><Mail className="h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><a href="mailto:hello@designbrooks.com" className="break-all transition hover:text-ivory-50">hello@designbrooks.com</a></li>
+            <li className="flex items-center gap-3"><Phone className="h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><a href="tel:+2348039764433" className="transition hover:text-ivory-50">+234 803 976 4433</a></li>
+            <li className="flex items-start gap-3"><Clock className="mt-0.5 h-5 w-5 shrink-0 text-gold/80" aria-hidden="true" /><span>Mon–Fri, 09:00–18:00 WAT<br /><span className="text-ivory-100/60">Site visits by appointment</span></span></li>
           </ul>
           <div className="mt-8 border-t border-white/10 pt-6">
             <p className="text-[0.66rem] font-extrabold uppercase tracking-[0.22em] text-gold">Existing client?</p>

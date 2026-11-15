@@ -6,7 +6,7 @@ import { Reveal } from "@/components/public/reveal";
 import { portfolioProjects } from "@/lib/site-content";
 
 export const metadata: Metadata = {
-  title: "Design Brooks | Architecture & Interiors — Lagos · New York",
+  title: "Design Brooks | Architecture & Interiors — Lagos, Nigeria",
   description:
     "Design Brooks is a multidisciplinary architecture and interiors studio delivering thoughtful residential, hospitality, workplace, and cultural environments.",
 };

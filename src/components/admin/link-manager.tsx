@@ -10,8 +10,10 @@ import {
   Mail,
   MessageCircle,
   RefreshCw,
+  Share2,
   ShieldCheck,
   ShieldX,
+  TriangleAlert,
   Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -40,7 +42,8 @@ export function LinkManager({
 }) {
   const router = useRouter();
   const [link, setLink] = React.useState<LinkState | null>(initialLink);
-  const [freshToken, setFreshToken] = React.useState<string | null>(null);
+  // Fresh token exists only in memory right after generate/regenerate — never persisted.
+  const [fresh, setFresh] = React.useState<{ id: string; token: string } | null>(null);
   const [expiry, setExpiry] = React.useState<LinkExpiryInput>("never");
   const [copied, setCopied] = React.useState(false);
   const [busy, setBusy] = React.useState<string | null>(null);
@@ -54,10 +57,12 @@ export function LinkManager({
 
   React.useEffect(() => {
     setLink(initialLink);
-    setFreshToken(null);
+    // Keep the freshly generated link visible across the post-generate
+    // refresh; drop it once the page is revisited or the underlying link changed.
+    setFresh((current) => (current && initialLink && current.id === initialLink.id ? current : null));
   }, [initialLink]);
 
-  const url = freshToken ? `${origin}/client/project/${freshToken}` : null;
+  const url = fresh ? `${origin}/client/project/${fresh.token}` : null;
   const active = link?.status === "ACTIVE";
 
   const copy = async () => {
@@ -87,6 +92,18 @@ export function LinkManager({
       `Design Brooks — ${projectName ?? "project"} documents`
     )}&body=${encodeURIComponent(`${shareText}\n\nOpen the link to view the documents released to you.`)}`;
   };
+  const shareLink = async () => {
+    if (!url) return;
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      try {
+        await navigator.share({ title: `Design Brooks — ${projectName ?? "project"} documents`, text: shareText, url });
+        return;
+      } catch {
+        // user dismissed or share failed — fall back to clipboard
+      }
+    }
+    await copy();
+  };
 
   const handleGenerate = async () => {
     setBusy("generate");
@@ -94,7 +111,7 @@ export function LinkManager({
     const result = await generateLinkAction(projectId, expiry);
     setBusy(null);
     if (!result.ok) { setError(result.error); return; }
-    setFreshToken(result.token ?? null);
+    setFresh(result.token && result.linkId ? { id: result.linkId, token: result.token } : null);
     setLink({ id: result.linkId!, projectId, status: "ACTIVE", createdAt: new Date().toISOString(), expiresAt: result.expiresAt, lastAccessedAt: null, openCount: 0 });
     router.refresh();
   };
@@ -107,7 +124,7 @@ export function LinkManager({
     setConfirm(null);
     if (!result.ok) { setError(result.error); return; }
     setLink((l) => (l ? { ...l, status: "REVOKED" } : l));
-    setFreshToken(null);
+    setFresh(null);
     router.refresh();
   };
 
@@ -118,7 +135,7 @@ export function LinkManager({
     setBusy(null);
     setConfirm(null);
     if (!result.ok) { setError(result.error); return; }
-    setFreshToken(result.token ?? null);
+    setFresh(result.token && result.linkId ? { id: result.linkId, token: result.token } : null);
     setLink({ id: result.linkId!, projectId, status: "ACTIVE", createdAt: new Date().toISOString(), expiresAt: result.expiresAt, lastAccessedAt: null, openCount: 0 });
     router.refresh();
   };
@@ -197,21 +214,30 @@ export function LinkManager({
         <LinkStatusBadge status="ACTIVE" />
       </div>
 
-      {/* URL display + copy — token only exists right after generation/regeneration */}
+      {/* URL display + copy + share — token only exists right after generation/regeneration */}
       {url ? (
-        <>
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <code className="flex-1 overflow-x-auto whitespace-nowrap rounded-xl border border-success/25 bg-white/80 px-4 py-3 text-[0.78rem] text-ink thin-scroll">
+        <div className="mt-4 rounded-2xl border border-success/40 bg-white/90 p-4 shadow-soft">
+          <p className="flex items-center gap-2 text-[0.72rem] font-extrabold uppercase tracking-[0.18em] text-success">
+            <Share2 className="h-4 w-4" aria-hidden="true" /> Link ready — copy or share it now
+          </p>
+          <div className="mt-2 flex flex-col gap-2 lg:flex-row">
+            <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap rounded-xl border border-success/25 bg-ivory-100/60 px-4 py-3 text-[0.8rem] text-ink thin-scroll">
               {url}
             </code>
-            <Button onClick={copy} variant={copied ? "accent" : "dark"} className="shrink-0">
-              {copied ? <><Check aria-hidden="true" /> Copied</> : <><Copy aria-hidden="true" /> Copy link</>}
-            </Button>
+            <div className="flex shrink-0 flex-wrap items-center gap-2">
+              <Button onClick={copy} variant={copied ? "accent" : "dark"} className="shrink-0">
+                {copied ? <><Check aria-hidden="true" /> Copied</> : <><Copy aria-hidden="true" /> Copy link</>}
+              </Button>
+              <Button onClick={shareLink} variant="dark" className="shrink-0">
+                <Share2 aria-hidden="true" /> Share link
+              </Button>
+            </div>
           </div>
-          <p className="mt-2 text-[0.72rem] font-semibold text-warning">
-            This is the only time the raw link is shown — store it now. Reloading clears it from view.
+          <p className="mt-2.5 flex items-start gap-2 rounded-xl border border-warning/30 bg-warning-soft/60 px-3 py-2 text-[0.74rem] leading-snug text-warning">
+            <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+            <span><span className="font-bold">Save this link before leaving the page.</span> It is shown only once — after a refresh or when you revisit this page, the original link can no longer be displayed and can only be replaced with Regenerate.</span>
           </p>
-        </>
+        </div>
       ) : (
         <div className="mt-4 rounded-xl border border-line bg-white/70 px-4 py-3 text-[0.78rem] leading-relaxed text-muted">
           The link is stored as a secure hash — it cannot be shown again after this page was loaded.

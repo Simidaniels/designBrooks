@@ -47,9 +47,9 @@ export function SiteFooter() {
         <div>
           <p className="text-[0.66rem] font-extrabold uppercase tracking-[0.2em] text-gold">Studio</p>
           <ul className="mt-3 grid gap-2 text-[0.86rem] text-ivory-100/80">
-            <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ivory-100/40" /> Lagos · New York · Remote collaborations</li>
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 shrink-0 text-ivory-100/40" /> <a href="mailto:hello@designbrooks.com" className="transition hover:text-ivory-50">hello@designbrooks.com</a></li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-ivory-100/40" /> <a href="tel:+2340000000000" className="transition hover:text-ivory-50">+234 (0) 000 000 0000</a></li>
+            <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ivory-100/40" aria-hidden="true" /> Lagos, Nigeria · Remote and Onsite Collaborations</li>
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4 shrink-0 text-ivory-100/40" aria-hidden="true" /> <a href="mailto:hello@designbrooks.com" className="break-all transition hover:text-ivory-50">hello@designbrooks.com</a></li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-ivory-100/40" aria-hidden="true" /> <a href="tel:+2348039764433" className="transition hover:text-ivory-50">+234 803 976 4433</a></li>
           </ul>
         </div>
       </div>

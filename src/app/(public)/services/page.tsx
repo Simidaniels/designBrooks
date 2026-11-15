@@ -97,7 +97,7 @@ export default function ServicesPage() {
             ["What kind of projects do you take on?", "Residential, hospitality, workplace, and selected cultural projects — including new builds, interior architecture, and high-value refurbishments."],
             ["Can you work with existing buildings?", "Yes. Refurbishment and adaptive reuse are a core part of our work, especially where layout, identity and finish quality need a strong redesign strategy."],
             ["Do you collaborate with contractors and consultants?", "Yes. We regularly coordinate with structural, MEP, lighting, landscape and construction teams to keep design and delivery aligned."],
-            ["Where are you based?", "Lagos and New York, with project teams that collaborate remotely and on site across West Africa, Europe, North America and Australia."],
+            ["Where are you based?", "Lagos, Nigeria, working remotely and on site with collaborators across West Africa, Europe, North America and Australia."],
           ].map(([q, a]) => (
             <details key={q} className="group rounded-2xl border border-line bg-surface-soft p-6">
               <summary className="cursor-pointer list-none font-display text-[1.35rem] font-semibold text-ink marker:hidden [&::-webkit-details-marker]:hidden">

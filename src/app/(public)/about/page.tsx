@@ -5,7 +5,7 @@ import { Reveal } from "@/components/public/reveal";
 
 export const metadata: Metadata = {
   title: "The Studio",
-  description: "Design Brooks is a multidisciplinary architecture and interiors studio rooted in precision, atmosphere and real-world function. Lagos · New York · Berlin collaborations.",
+  description: "Design Brooks is a multidisciplinary architecture and interiors studio rooted in precision, atmosphere and real-world function. Lagos, Nigeria · Remote and onsite collaborations.",
 };
 
 const PRINCIPLES = [
@@ -54,7 +54,7 @@ export default function AboutPage() {
           </dl>
         </div>
         <div className="relative min-h-[380px] overflow-hidden rounded-[2rem] shadow-card">
-          <Image src="/images/office.webp" alt="Design Brooks studio — project model table in New York" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover object-[60%_40%]" />
+          <Image src="/images/office.webp" alt="Design Brooks studio — project model table" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover object-[60%_40%]" />
         </div>
       </section>
 

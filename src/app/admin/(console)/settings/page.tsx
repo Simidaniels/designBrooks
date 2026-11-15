@@ -14,8 +14,8 @@ export default async function AdminSettingsPage() {
     getSetting("studio.profile", {
       name: "Design Brooks",
       email: "hello@designbrooks.com",
-      phone: "+234 (0) 000 000 0000",
-      locations: "Lagos · New York · Remote",
+      phone: "+234 803 976 4433",
+      locations: "Lagos, Nigeria · Remote and Onsite Collaborations",
     }),
     getSetting("links.defaults", { defaultExpiry: "never" as const, defaultAccessMode: "RESTRICTED_PREVIEW" as const }),
     getSetting("notifications.prefs", {

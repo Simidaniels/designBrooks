@@ -8,6 +8,8 @@ import {
   Check,
   ShieldCheck,
   Loader2,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/field";
@@ -41,9 +43,53 @@ function Toggle({ label, description, value, onChange }: { label: string; descri
   );
 }
 
+function PasswordInput({
+  id,
+  autoComplete,
+  value,
+  onChange,
+  visible,
+  onToggle,
+}: {
+  id: string;
+  autoComplete: "current-password" | "new-password";
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  visible: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="relative">
+      <Input
+        id={id}
+        type={visible ? "text" : "password"}
+        autoComplete={autoComplete}
+        value={value}
+        onChange={onChange}
+        className="h-11 pr-12"
+      />
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-label={visible ? "Hide password" : "Show password"}
+        aria-pressed={visible}
+        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+      >
+        {visible ? (
+          <EyeOff className="h-5 w-5" aria-hidden="true" />
+        ) : (
+          <Eye className="h-5 w-5" aria-hidden="true" />
+        )}
+      </button>
+    </div>
+  );
+}
+
 function PasswordChangeForm({ adminEmail }: { adminEmail: string }) {
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
+  const [showCurrent, setShowCurrent] = React.useState(false);
+  const [showNew, setShowNew] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   const [message, setMessage] = React.useState<{ type: "ok" | "error"; text: string } | null>(null);
 
@@ -67,13 +113,27 @@ function PasswordChangeForm({ adminEmail }: { adminEmail: string }) {
       <h2 className="flex items-center gap-2 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-muted">
         <ShieldCheck className="h-4 w-4 text-accent" aria-hidden="true" /> Change password
       </h2>
-      <p className="mt-1.5 text-[0.8rem] text-muted">Signed in as <span className="font-bold text-ink">{adminEmail}</span>. Min. 12 characters with upper/lowercase letters and a number.</p>
-      <form onSubmit={submit} className="mt-4 grid gap-4 sm:grid-cols-2">
+      <p className="mt-1.5 text-[0.8rem] text-muted">Signed in as <span className="font-bold text-ink">{adminEmail}</span>.</p>
+      <form onSubmit={submit} className="mt-4 grid items-start gap-4 sm:grid-cols-2">
         <Field label="Current password" htmlFor="current-password" required>
-          <Input id="current-password" type="password" autoComplete="current-password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+          <PasswordInput
+            id="current-password"
+            autoComplete="current-password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            visible={showCurrent}
+            onToggle={() => setShowCurrent((v) => !v)}
+          />
         </Field>
-        <Field label="New password" htmlFor="new-password" required hint="≥ 12 chars, mixed case + number">
-          <Input id="new-password" type="password" autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+        <Field label="New password" htmlFor="new-password" required>
+          <PasswordInput
+            id="new-password"
+            autoComplete="new-password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            visible={showNew}
+            onToggle={() => setShowNew((v) => !v)}
+          />
         </Field>
         <div className="sm:col-span-2">
           <Button type="submit" disabled={busy}>
