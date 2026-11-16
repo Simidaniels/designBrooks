@@ -22,6 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import { logoutAction } from "@/lib/actions/auth";
 import { InquiryBadge } from "@/components/admin/inquiry-badge";
+import { NavFeedbackProvider, TopProgressBar, NavItemSpinner, useNavFeedback } from "@/components/admin/navigation-feedback";
 
 const NAV = [
   { section: "Overview", items: [{ href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard }] },
@@ -45,6 +46,60 @@ const NAV = [
   },
 ];
 
+function SidebarNavItem({
+  item,
+  unreadInquiries,
+}: {
+  item: { href: string; label: string; icon: typeof LayoutDashboard };
+  unreadInquiries: number;
+}) {
+  const pathname = usePathname();
+  const { pendingHref, isNavigating, startNavigation } = useNavFeedback();
+
+  const active =
+    pathname === item.href ||
+    (item.href !== "/admin/documents" && pathname.startsWith(`${item.href}/`)) ||
+    (item.href === "/admin/documents" && pathname === "/admin/documents");
+  const pending = pendingHref === item.href;
+  const highlighted = active || pending;
+  const Icon = item.icon;
+
+  return (
+    <li>
+      <Link
+        href={item.href}
+        aria-current={active ? "page" : undefined}
+        aria-busy={pending || undefined}
+        onClick={(event) => {
+          if (item.href === pathname) {
+            event.preventDefault();
+            return;
+          }
+          if (isNavigating && pendingHref === item.href) {
+            event.preventDefault(); // duplicate click on the in-flight destination
+            return;
+          }
+          startNavigation(item.href);
+        }}
+        className={cn(
+          "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.84rem] font-semibold text-ivory-100/65 transition",
+          "hover:bg-white/5 hover:text-ivory-50",
+          highlighted && "bg-accent/25 text-ivory-50"
+        )}
+      >
+        <Icon className={cn("h-4 w-4 shrink-0", highlighted ? "text-gold" : "text-ivory-100/40 group-hover:text-ivory-100/70")} aria-hidden="true" />
+        <span className="flex-1">{item.label}</span>
+        {item.href === "/admin/inquiries" && <InquiryBadge initialCount={unreadInquiries} />}
+        {pending ? (
+          <NavItemSpinner visible />
+        ) : (
+          active && <ChevronRight className="h-4 w-4 text-gold/70" aria-hidden="true" />
+        )}
+      </Link>
+    </li>
+  );
+}
+
 export function AdminShell({
   children,
   adminEmail,
@@ -54,7 +109,26 @@ export function AdminShell({
   adminEmail: string;
   unreadInquiries?: number;
 }) {
+  return (
+    <NavFeedbackProvider>
+      <AdminShellInner adminEmail={adminEmail} unreadInquiries={unreadInquiries}>
+        {children}
+      </AdminShellInner>
+    </NavFeedbackProvider>
+  );
+}
+
+function AdminShellInner({
+  children,
+  adminEmail,
+  unreadInquiries = 0,
+}: {
+  children: React.ReactNode;
+  adminEmail: string;
+  unreadInquiries?: number;
+}) {
   const pathname = usePathname();
+  const { isNavigating } = useNavFeedback();
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => setOpen(false), [pathname]);
@@ -82,31 +156,9 @@ export function AdminShell({
               {group.section}
             </p>
             <ul className="grid gap-0.5">
-              {group.items.map((item) => {
-                const active =
-                  pathname === item.href ||
-                  (item.href !== "/admin/documents" && pathname.startsWith(`${item.href}/`)) ||
-                  (item.href === "/admin/documents" && pathname === "/admin/documents");
-                const Icon = item.icon;
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.84rem] font-semibold text-ivory-100/65 transition",
-                        "hover:bg-white/5 hover:text-ivory-50",
-                        active && "bg-accent/25 text-ivory-50"
-                      )}
-                    >
-                      <Icon className={cn("h-4 w-4 shrink-0", active ? "text-gold" : "text-ivory-100/40 group-hover:text-ivory-100/70")} aria-hidden="true" />
-                      <span className="flex-1">{item.label}</span>
-                      {item.href === "/admin/inquiries" && <InquiryBadge initialCount={unreadInquiries} />}
-                      {active && <ChevronRight className="h-4 w-4 text-gold/70" aria-hidden="true" />}
-                    </Link>
-                  </li>
-                );
-              })}
+              {group.items.map((item) => (
+                <SidebarNavItem key={item.href} item={item} unreadInquiries={unreadInquiries} />
+              ))}
             </ul>
           </div>
         ))}
@@ -147,8 +199,15 @@ export function AdminShell({
       )}
 
       {/* Main column */}
-      <div className="lg:pl-[268px]">
+      <div className="relative lg:pl-[268px]">
+        {/* Screen-reader navigation status */}
+        <span role="status" aria-live="polite" className="sr-only">
+          {isNavigating ? "Loading next page…" : ""}
+        </span>
+
         <header className="sticky top-0 z-20 flex h-14 items-center justify-between gap-3 border-b border-line bg-ivory-100/90 px-4 backdrop-blur-xl sm:px-6">
+          {/* Slim progress indicator at the top of the content area */}
+          <TopProgressBar />
           <div className="flex items-center gap-3">
             <button onClick={() => setOpen(true)} aria-label="Open menu" className="rounded-lg border border-line bg-white/70 p-2 lg:hidden">
               <Menu className="h-5 w-5" />

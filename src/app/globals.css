@@ -128,3 +128,30 @@ body {
 .data-table tbody tr:last-child td {
   border-bottom: 0;
 }
+
+/* Admin navigation feedback — slim progress bar + slow spinner */
+@keyframes admin-nav-creep {
+  0% { width: 2%; }
+  35% { width: 38%; }
+  70% { width: 66%; }
+  100% { width: 88%; }
+}
+@keyframes admin-spin-slow {
+  to { transform: rotate(360deg); }
+}
+.nav-progress-active {
+  animation: admin-nav-creep 9s cubic-bezier(0.16, 0.6, 0.28, 1) forwards;
+}
+.nav-progress-done {
+  width: 100%;
+  opacity: 0;
+  transition: width 0.18s ease-out, opacity 0.32s ease 0.18s;
+}
+.spinner-slow {
+  animation: admin-spin-slow 1.3s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-progress-active { animation-duration: 30s; }
+  .spinner-slow { animation-duration: 2.4s; }
+  .nav-progress-done { transition: none; }
+}
