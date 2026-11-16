@@ -87,9 +87,15 @@ export async function deleteProjectAction(id: string) {
   const project = await prisma.project.findUnique({ where: { id }, include: { documents: true } });
   if (!project) return { ok: false as const, error: "Project not found." };
 
-  for (const doc of project.documents) {
-    await deleteObject(doc.storageKey);
-    await deleteObject(doc.previewKey);
+  try {
+    for (const doc of project.documents) {
+      await deleteObject(doc.storageKey);
+      await deleteObject(doc.previewKey);
+    }
+  } catch (err) {
+    // Fail closed — the project and its database records stay intact.
+    console.error("[projects] storage delete failed:", (err as { name?: string })?.name ?? "unknown");
+    return { ok: false as const, error: "Document storage is unavailable. Nothing was deleted — try again shortly." };
   }
   await prisma.project.delete({ where: { id } });
   await logActivity({ actorType: "ADMIN", adminId: admin.id, action: "Project deleted", detail: `${project.name} (+${project.documents.length} document(s))` });

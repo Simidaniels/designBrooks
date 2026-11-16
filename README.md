@@ -90,11 +90,11 @@ Creating or editing a project accepts a **cover photo upload** (JPG/PNG/WebP, �
 - **Inquiries:** Zod validation, honeypot field, in-memory throttle (dev-grade — use edge rate limiting in production).
 - **Admin sessions:** all `/admin/*` pages are `force-dynamic` and re-check the session on every render; route handlers and actions independently re-verify.
 - **No screenshot prevention is claimed** — restricted previews are watermarked deterrents, the original is never served.
-- **Known limits (documented honestly):** local disk storage is single-node — production uses R2 (see below); session cookie auth is custom but hardened (scrypt, hashed tokens, rolling expiry, per-request validation); WS/S3 adapter** IS implemented** and switches on automatically when `R2_*` env vars are set.
+- **Known limits (documented honestly):** local disk storage is single-node — production uses R2 (see below) and **fails closed without it**: the server refuses to boot and every storage operation errors out instead of silently writing to ephemeral disk. Storage is required — set `R2_*` before going live. Session cookie auth is custom but hardened (scrypt, hashed tokens, rolling expiry, per-request validation).
 
 ## Environment variables
 
-See [.env.example](.env.example). Required for production: `DATABASE_URL` (Neon **pooled**), `DIRECT_URL` (Neon **direct**, for migrations), `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, `R2_ENDPOINT`, `NEXT_PUBLIC_APP_URL`. Local dev needs only `DATABASE_URL` + `DIRECT_URL` (defaults to disk storage, see `.env.example`).
+See [.env.example](.env.example). Required for production: `DATABASE_URL` (Neon **pooled**), `DIRECT_URL` (Neon **direct**, for migrations), `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, `R2_ENDPOINT`, `NEXT_PUBLIC_APP_URL`. Without valid R2 settings the production server refuses to start (validated at boot in `instrumentation.ts` and again per storage operation) — there is no silent disk fallback. Local dev needs only `DATABASE_URL` + `DIRECT_URL` (defaults to disk storage, see `.env.example`).
 
 Passwords are scrypt-hashed with per-user salts; sessions are random opaque tokens stored as SHA-256 hashes — **no application signing secret is required**.
 
@@ -116,7 +116,8 @@ Passwords are scrypt-hashed with per-user salts; sessions are random opaque toke
 1. Create an R2 bucket (e.g. `designbrooks-files`), leave it **private** (no public development URL).
 2. R2 → Manage API Tokens → **Create Token** → Object Read & Write for the bucket → copy credentials.
 3. Set `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, and `R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com`.
-4. No CORS rules are needed — the browser never talks to R2; everything is proxied through the authorized route handlers.
+4. Fail-closed check: after setting the vars, redeploy and confirm the boot log prints `[storage] R2 object storage configured.` — the server exits with an error naming the missing/invalid variables if not.
+5. No CORS rules are needed — the browser never talks to R2; everything is proxied through the authorized route handlers.
 
 ### 3. Vercel (hosting)
 

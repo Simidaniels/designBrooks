@@ -70,7 +70,15 @@ export async function POST(request: NextRequest) {
 
   // ————— Store the original privately —————
   const storageKey = newStorageKey(projectId, ext);
-  await putObject(storageKey, buffer);
+  try {
+    await putObject(storageKey, buffer);
+  } catch (err) {
+    console.error("[upload] storage write failed:", (err as { name?: string })?.name ?? "unknown");
+    return NextResponse.json(
+      { ok: false, error: "Document storage is unavailable. The file was not saved." },
+      { status: 503 }
+    );
+  }
 
   // ————— Restricted previews are generated server-side now —————
   const isRestricted = accessMode === "RESTRICTED_PREVIEW";

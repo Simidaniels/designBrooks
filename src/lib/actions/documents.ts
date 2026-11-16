@@ -58,8 +58,14 @@ export async function deleteDocumentAction(id: string) {
   const doc = await prisma.document.findUnique({ where: { id } });
   if (!doc) return { ok: false as const, error: "Document not found." };
 
-  await deleteObject(doc.storageKey);
-  await deleteObject(doc.previewKey);
+  try {
+    await deleteObject(doc.storageKey);
+    await deleteObject(doc.previewKey);
+  } catch (err) {
+    // Fail closed — nothing is deleted, the database record stays consistent.
+    console.error("[documents] storage delete failed:", (err as { name?: string })?.name ?? "unknown");
+    return { ok: false as const, error: "Document storage is unavailable. Nothing was deleted — try again shortly." };
+  }
   await prisma.document.delete({ where: { id } });
   await logActivity({ actorType: "ADMIN", adminId: admin.id, action: "Document deleted", detail: doc.name, projectId: doc.projectId, documentId: id });
   revalidatePath("/admin/documents");

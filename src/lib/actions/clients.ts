@@ -91,11 +91,17 @@ export async function deleteClientAction(id: string) {
   });
   if (!client) return { ok: false as const, error: "Client not found." };
 
-  for (const project of client.projects) {
-    for (const doc of project.documents) {
-      await deleteObject(doc.storageKey);
-      await deleteObject(doc.previewKey);
+  try {
+    for (const project of client.projects) {
+      for (const doc of project.documents) {
+        await deleteObject(doc.storageKey);
+        await deleteObject(doc.previewKey);
+      }
     }
+  } catch (err) {
+    // Fail closed — the client and its database records stay intact.
+    console.error("[clients] storage delete failed:", (err as { name?: string })?.name ?? "unknown");
+    return { ok: false as const, error: "Document storage is unavailable. Nothing was deleted — try again shortly." };
   }
   await prisma.client.delete({ where: { id } });
   await logActivity({ actorType: "ADMIN", adminId: admin.id, action: "Client deleted", detail: `${client.fullName} (with ${client.projects.length} project(s))` });

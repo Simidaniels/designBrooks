@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authorizedDocument, resolveClientToken } from "@/lib/server/client-links";
-import { getObject } from "@/lib/server/storage";
+import { getObject, isNotFoundStorageError } from "@/lib/server/storage";
 import { logActivity } from "@/lib/server/activity";
 import { contentTypeFor, safeFileName } from "@/lib/server/mime";
 import { sniff } from "@/lib/server/file-sniff";
@@ -35,8 +35,12 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   let data: Buffer;
   try {
     data = await getObject(key);
-  } catch {
-    return NextResponse.json({ error: "Preview unavailable." }, { status: 404 });
+  } catch (err) {
+    if (isNotFoundStorageError(err)) {
+      return NextResponse.json({ error: "Preview unavailable." }, { status: 404 });
+    }
+    console.error("[preview] storage error:", (err as { name?: string })?.name ?? "unknown");
+    return NextResponse.json({ error: "Document storage is unavailable." }, { status: 503 });
   }
 
   // Serve by actual bytes when recognizable, not just by key extension —

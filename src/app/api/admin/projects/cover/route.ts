@@ -56,7 +56,15 @@ export async function POST(request: NextRequest) {
 
   const name = `${randomBytes(16).toString("hex")}.webp`;
   const key = `covers/${name}`;
-  await putObject(key, webp);
+  try {
+    await putObject(key, webp);
+  } catch (err) {
+    console.error("[cover] storage write failed:", (err as { name?: string })?.name ?? "unknown");
+    return NextResponse.json(
+      { ok: false, error: "Document storage is unavailable. The cover was not saved." },
+      { status: 503 }
+    );
+  }
 
   await logActivity({
     actorType: "ADMIN",
