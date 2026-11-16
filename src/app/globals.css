@@ -150,8 +150,26 @@ body {
 .spinner-slow {
   animation: admin-spin-slow 1.3s linear infinite;
 }
+
+/* Mobile drawer entrance — subtle, respects reduced motion */
+@keyframes admin-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes admin-drawer-in {
+  from { opacity: 0.4; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.admin-overlay-in {
+  animation: admin-overlay-in 0.2s ease-out both;
+}
+.admin-drawer-in {
+  animation: admin-drawer-in 0.22s ease-out both;
+}
 @media (prefers-reduced-motion: reduce) {
   .nav-progress-active { animation-duration: 30s; }
   .spinner-slow { animation-duration: 2.4s; }
   .nav-progress-done { transition: none; }
+  .admin-overlay-in,
+  .admin-drawer-in { animation: none; }
 }

@@ -82,13 +82,32 @@ function SidebarNavItem({
           startNavigation(item.href);
         }}
         className={cn(
-          "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.84rem] font-semibold text-ivory-100/65 transition",
-          "hover:bg-white/5 hover:text-ivory-50",
-          highlighted && "bg-accent/25 text-ivory-50"
+          "group flex min-h-[44px] cursor-pointer select-none items-center gap-3 rounded-xl px-3 py-2.5 text-[0.84rem] font-semibold text-ivory-100/65",
+          "transition-[background-color,color,box-shadow,transform] duration-200 ease-out",
+          "[touch-action:manipulation] [-webkit-tap-highlight-color:transparent]",
+          "hover:text-ivory-50",
+          "active:scale-[0.985] active:text-ivory-50",
+          "focus-visible:bg-white/10 focus-visible:text-ivory-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold/80",
+          "motion-reduce:transition-none motion-reduce:active:scale-100",
+          highlighted
+            ? "bg-accent/25 text-ivory-50 shadow-[inset_2px_0_0_0_rgba(176,141,79,0.9)] hover:bg-accent/30 active:bg-accent/35"
+            : "hover:bg-white/5 active:bg-white/10"
         )}
       >
-        <Icon className={cn("h-4 w-4 shrink-0", highlighted ? "text-gold" : "text-ivory-100/40 group-hover:text-ivory-100/70")} aria-hidden="true" />
-        <span className="flex-1">{item.label}</span>
+        <Icon
+          className={cn(
+            "h-4 w-4 shrink-0 transition-[color,transform] duration-200 ease-out",
+            "group-hover:scale-110 group-active:scale-100",
+            "motion-reduce:transition-none motion-reduce:group-hover:scale-100",
+            highlighted
+              ? "text-gold group-hover:text-gold"
+              : "text-ivory-100/40 group-hover:text-gold/80 group-active:text-gold"
+          )}
+          aria-hidden="true"
+        />
+        <span className="flex-1 transition-transform duration-200 ease-out group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0">
+          {item.label}
+        </span>
         {item.href === "/admin/inquiries" && <InquiryBadge initialCount={unreadInquiries} />}
         {pending ? (
           <NavItemSpinner visible />
@@ -133,6 +152,20 @@ function AdminShellInner({
 
   React.useEffect(() => setOpen(false), [pathname]);
 
+  // Escape closes the mobile drawer; focus returns to the trigger button
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
+  React.useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   React.useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
@@ -171,9 +204,9 @@ function AdminShellInner({
         <form action={logoutAction}>
           <button
             type="submit"
-            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[0.76rem] font-semibold text-ivory-100/50 transition hover:bg-danger/20 hover:text-danger-soft"
+            className="flex min-h-[44px] w-full cursor-pointer select-none items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[0.76rem] font-semibold text-ivory-100/50 transition-[background-color,color,transform] duration-200 ease-out [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] hover:bg-danger/20 hover:text-danger-soft active:scale-[0.985] active:bg-danger/30 active:text-danger-soft focus-visible:bg-danger/20 focus-visible:text-danger-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold/80 motion-reduce:transition-none motion-reduce:active:scale-100"
           >
-            <LogOut className="h-4 w-4" aria-hidden="true" /> Sign out
+            <LogOut className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" /> Sign out
           </button>
         </form>
       </div>
@@ -188,10 +221,18 @@ function AdminShellInner({
       {/* Mobile drawer */}
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden" role="presentation">
-          <button aria-label="Close menu" className="absolute inset-0 bg-ink-900/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className="absolute inset-y-0 left-0 h-full shadow-card">
-            <button onClick={() => setOpen(false)} aria-label="Close menu" className="absolute right-3 top-4 z-10 rounded-lg p-2 text-ivory-100/60 hover:bg-white/10">
-              <X className="h-5 w-5" />
+          <button
+            aria-label="Close menu"
+            className="admin-overlay-in absolute inset-0 cursor-pointer bg-ink-900/60 backdrop-blur-sm [-webkit-tap-highlight-color:transparent]"
+            onClick={() => setOpen(false)}
+          />
+          <div className="admin-drawer-in absolute inset-y-0 left-0 h-full shadow-card">
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+              className="absolute right-3 top-4 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg text-ivory-100/60 transition-[background-color,color,transform] duration-200 ease-out [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] hover:bg-white/10 hover:text-ivory-50 active:scale-95 active:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold/80 motion-reduce:transition-none motion-reduce:active:scale-100"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
             {sidebar}
           </div>
@@ -209,8 +250,14 @@ function AdminShellInner({
           {/* Slim progress indicator at the top of the content area */}
           <TopProgressBar />
           <div className="flex items-center gap-3">
-            <button onClick={() => setOpen(true)} aria-label="Open menu" className="rounded-lg border border-line bg-white/70 p-2 lg:hidden">
-              <Menu className="h-5 w-5" />
+            <button
+              ref={menuButtonRef}
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={open}
+              className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-line bg-white/70 transition-[background-color,transform,border-color] duration-200 ease-out [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] hover:border-line-strong hover:bg-white active:scale-95 active:bg-ivory-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none motion-reduce:active:scale-100 lg:hidden"
+            >
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
             <p className="hidden text-[0.78rem] font-bold text-muted sm:block">
               Design Brooks <span className="mx-1.5 text-sand">/</span> <span className="text-ink">Admin Console</span>
